@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linen & Loom — Considered Clothing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F4EE;
+    --ink:#2B2A28;
+    --muted:#8A8377;
+    --line:#DAD4C6;
+    --terracotta:#C1502E;
+    --forest:#3F5444;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;}
+  h1,h2,h3,.serif{font-family:'Playfair Display',serif;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px;}
+
+  /* Header */
+  header{position:sticky;top:0;background:rgba(247,244,238,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:50;}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;max-width:1160px;margin:0 auto;}
+  .logo{font-size:1.4rem;font-weight:700;letter-spacing:.5px;}
+  .logo span{color:var(--terracotta);}
+  .nav-links{display:flex;gap:32px;font-size:.85rem;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);}
+  .nav-links a:hover{color:var(--ink);}
+  .cart-btn{position:relative;background:var(--ink);color:#fff;border:none;padding:10px 18px;border-radius:2px;font-size:.8rem;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:8px;}
+  .cart-count{background:var(--terracotta);border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:.7rem;}
+
+  /* Hero */
+  .hero{padding:90px 24px 70px;max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center;}
+  .hero-eyebrow{font-size:.78rem;letter-spacing:2px;text-transform:uppercase;color:var(--terracotta);margin-bottom:18px;font-weight:600;}
+  .hero h1{font-size:3.4rem;line-height:1.08;font-weight:700;margin-bottom:20px;}
+  .hero h1 em{font-style:italic;color:var(--forest);}
+  .hero p{color:var(--muted);font-size:1.02rem;max-width:420px;margin-bottom:28px;}
+  .btn-primary{display:inline-block;background:var(--ink);color:#fff;padding:14px 32px;font-size:.85rem;letter-spacing:.5px;text-transform:uppercase;border-radius:2px;}
+  .hero-visual{position:relative;height:420px;}
+  .stack-card{position:absolute;width:230px;border-radius:4px;overflow:hidden;box-shadow:0 24px 50px -10px rgba(0,0,0,.25);}
+  .stack-card img{width:100%;display:block;height:280px;object-fit:cover;}
+  .stack-1{top:0;left:40px;transform:rotate(-6deg);z-index:2;}
+  .stack-2{top:60px;left:220px;transform:rotate(5deg);z-index:1;}
+  .stack-tag{position:absolute;bottom:-18px;right:30px;background:var(--card);padding:14px 18px;border-radius:4px;box-shadow:0 12px 30px rgba(0,0,0,.12);font-size:.8rem;z-index:3;}
+  .stack-tag b{display:block;font-family:'Playfair Display',serif;font-size:1.1rem;}
+
+  /* Section title */
+  .section-head{text-align:center;margin-bottom:46px;}
+  .section-head .eyebrow{font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--terracotta);font-weight:600;margin-bottom:10px;}
+  .section-head h2{font-size:2.1rem;}
+
+  /* Products */
+  .products{padding:70px 24px;}
+  .filter-row{display:flex;justify-content:center;gap:10px;margin-bottom:40px;flex-wrap:wrap;}
+  .filter-chip{border:1px solid var(--line);background:transparent;padding:8px 18px;border-radius:20px;font-size:.8rem;cursor:pointer;color:var(--muted);}
+  .filter-chip.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;max-width:1160px;margin:0 auto;}
+  .product{background:var(--card);border-radius:4px;overflow:hidden;border:1px solid var(--line);transition:transform .25s, box-shadow .25s;}
+  .product:hover{transform:translateY(-6px);box-shadow:0 20px 40px -12px rgba(0,0,0,.15);}
+  .product-img{height:230px;overflow:hidden;}
+  .product-img img{width:100%;height:100%;object-fit:cover;}
+  .product-info{padding:18px;}
+  .product-info .cat{font-size:.72rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px;}
+  .product-info h3{font-size:1.05rem;font-weight:600;font-family:'Inter';margin-bottom:8px;}
+  .price-row{display:flex;justify-content:space-between;align-items:center;}
+  .price{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--forest);}
+  .add-btn{border:1px solid var(--ink);background:transparent;padding:7px 14px;border-radius:2px;font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;}
+  .add-btn:hover{background:var(--ink);color:#fff;}
+
+  /* Footer */
+  footer{background:var(--ink);color:#EDE9DF;padding:50px 24px 24px;margin-top:60px;}
+  .footer-inner{max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;}
+  .footer-inner .logo{color:#fff;}
+  .footer-bottom{text-align:center;color:#8A8377;font-size:.8rem;margin-top:40px;border-top:1px solid #44423E;padding-top:20px;}
+
+  /* Cart drawer */
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .3s;z-index:90;}
+  .overlay.show{opacity:1;pointer-events:auto;}
+  .cart-drawer{position:fixed;top:0;right:-420px;width:400px;height:100%;background:#fff;z-index:100;transition:right .35s ease;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(0,0,0,.2);}
+  .cart-drawer.open{right:0;}
+  .cart-head{padding:24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;}
+  .cart-head h3{font-family:'Playfair Display',serif;}
+  .close-btn{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);}
+  .cart-items{flex:1;overflow-y:auto;padding:18px 24px;}
+  .cart-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);}
+  .cart-item img{width:60px;height:70px;object-fit:cover;border-radius:3px;}
+  .cart-item-info{flex:1;}
+  .cart-item-info h4{font-size:.9rem;margin-bottom:4px;}
+  .qty-row{display:flex;align-items:center;gap:10px;margin-top:6px;}
+  .qty-btn{width:22px;height:22px;border:1px solid var(--line);background:#fff;border-radius:50%;cursor:pointer;font-size:.8rem;}
+  .remove-btn{color:var(--terracotta);font-size:.75rem;cursor:pointer;background:none;border:none;margin-left:auto;}
+  .cart-footer{padding:24px;border-top:1px solid var(--line);}
+  .subtotal-row{display:flex;justify-content:space-between;margin-bottom:16px;font-weight:600;}
+  .checkout-btn{width:100%;background:var(--forest);color:#fff;border:none;padding:14px;font-size:.85rem;text-transform:uppercase;letter-spacing:.5px;border-radius:2px;cursor:pointer;}
+  .empty-cart{text-align:center;color:var(--muted);padding:60px 0;font-size:.9rem;}
+  .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 24px;border-radius:30px;font-size:.85rem;opacity:0;transition:all .3s;z-index:200;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr;text-align:center;}
+    .hero p{margin:0 auto 28px;}
+    .hero-visual{display:none;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .nav-links{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="logo">Linen <span>&</span> Loom</div>
+    <div class="nav-links">
+      <a href="#shop">Shop</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="cart-btn" onclick="toggleCart()">Bag <span class="cart-count" id="cartCount">0</span></button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">Spring / Summer Collection</div>
+    <h1>Clothing made to <em>last</em>, not to chase trends.</h1>
+    <p>Natural fibers, considered construction, and a quiet color palette — built for everyday wear that gets better with time.</p>
+    <a href="#shop" class="btn-primary">Shop the collection</a>
+  </div>
+  <div class="hero-visual">
+    <div class="stack-card stack-1"><img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=400&q=80" alt="Linen shirt"></div>
+    <div class="stack-card stack-2"><img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&q=80" alt="Cotton dress"></div>
+    <div class="stack-tag"><b>4.9★</b>2,400+ reviews</div>
+  </div>
+</section>
+
+<section class="products" id="shop">
+  <div class="section-head">
+    <div class="eyebrow">Featured</div>
+    <h2>Shop the essentials</h2>
+  </div>
+  <div class="filter-row" id="filters"></div>
+  <div class="grid" id="productGrid"></div>
+</section>
+
+<footer id="contact">
+  <div class="footer-inner">
+    <div>
+      <div class="logo">Linen & Loom</div>
+      <p style="color:#A8A398;margin-top:10px;max-width:260px;font-size:.85rem">Considered clothing for everyday life. Designed in small batches, made to last.</p>
+    </div>
+    <div>
+      <h4 style="margin-bottom:14px;font-size:.85rem;text-transform:uppercase;letter-spacing:1px;">Contact</h4>
+      <p style="color:#A8A398;font-size:.85rem;">hello@linenandloom.demo<br>Mon–Fri, 9am–6pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom">Demo project — front-end e-commerce UI built with HTML, CSS & JavaScript.</div>
+</footer>
+
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3>Your Bag</h3>
+    <button class="close-btn" onclick="toggleCart()">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="subtotal-row"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+    <button class="checkout-btn" onclick="checkout()">Checkout</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const products = [
+  {id:1, name:"Linen Button-Up", cat:"Shirts", price:68, img:"https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&q=80"},
+  {id:2, name:"Relaxed Cotton Tee", cat:"Tops", price:32, img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=80"},
+  {id:3, name:"Wide-Leg Trousers", cat:"Bottoms", price:74, img:"https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400&q=80"},
+  {id:4, name:"Midi Linen Dress", cat:"Dresses", price:89, img:"https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400&q=80"},
+  {id:5, name:"Cropped Knit Cardigan", cat:"Outerwear", price:58, img:"https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&q=80"},
+  {id:6, name:"Tailored Shorts", cat:"Bottoms", price:46, img:"https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=400&q=80"},
+  {id:7, name:"Oversized Shirt Dress", cat:"Dresses", price:82, img:"https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?w=400&q=80"},
+  {id:8, name:"Classic Denim Jacket", cat:"Outerwear", price:96, img:"https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&q=80"},
+];
+
+let cart = JSON.parse(localStorage.getItem('ll_cart') || '[]');
+let activeCat = 'All';
+
+function renderFilters(){
+  const cats = ['All', ...new Set(products.map(p=>p.cat))];
+  document.getElementById('filters').innerHTML = cats.map(c=>
+    `<button class="filter-chip ${c===activeCat?'active':''}" onclick="setFilter('${c}')">${c}</button>`
+  ).join('');
+}
+function setFilter(c){ activeCat = c; renderFilters(); renderProducts(); }
+
+function renderProducts(){
+  const list = activeCat==='All' ? products : products.filter(p=>p.cat===activeCat);
+  document.getElementById('productGrid').innerHTML = list.map(p=>`
+    <div class="product">
+      <div class="product-img"><img src="${p.img}" alt="${p.name}"></div>
+      <div class="product-info">
+        <div class="cat">${p.cat}</div>
+        <h3>${p.name}</h3>
+        <div class="price-row">
+          <span class="price">$${p.price}</span>
+          <button class="add-btn" onclick="addToCart(${p.id})">Add</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addToCart(id){
+  const product = products.find(p=>p.id===id);
+  const existing = cart.find(i=>i.id===id);
+  if(existing){ existing.qty++; } else { cart.push({...product, qty:1}); }
+  saveCart();
+  showToast(`${product.name} added to bag`);
+  renderCart();
+}
+function changeQty(id, delta){
+  const item = cart.find(i=>i.id===id);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty<=0) cart = cart.filter(i=>i.id!==id);
+  saveCart(); renderCart();
+}
+function removeItem(id){ cart = cart.filter(i=>i.id!==id); saveCart(); renderCart(); }
+function saveCart(){ localStorage.setItem('ll_cart', JSON.stringify(cart)); updateCartCount(); }
+function updateCartCount(){
+  document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0);
+}
+function renderCart(){
+  const itemsEl = document.getElementById('cartItems');
+  if(cart.length===0){
+    itemsEl.innerHTML = `<div class="empty-cart">Your bag is empty.</div>`;
+  } else {
+    itemsEl.innerHTML = cart.map(i=>`
+      <div class="cart-item">
+        <img src="${i.img}" alt="${i.name}">
+        <div class="cart-item-info">
+          <h4>${i.name}</h4>
+          <div>$${i.price}</div>
+          <div class="qty-row">
+            <button class="qty-btn" onclick="changeQty(${i.id},-1)">−</button>
+            <span>${i.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${i.id},1)">+</button>
+            <button class="remove-btn" onclick="removeItem(${i.id})">Remove</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+}
+function toggleCart(){
+  document.getElementById('cartDrawer').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+function checkout(){
+  if(cart.length===0){ showToast('Your bag is empty'); return; }
+  showToast('Order placed! (demo checkout)');
+  cart = []; saveCart(); renderCart(); toggleCart();
+}
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+renderFilters();
+renderProducts();
+updateCartCount();
+renderCart();
+</script>
+</body>
+</html>
