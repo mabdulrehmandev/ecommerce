@@ -118,6 +118,7 @@
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </div>
+    <button class="cart-btn" id="ordersBtn" onclick="toggleOrders()" style="background:transparent;color:var(--ink);border:1px solid var(--line);margin-right:10px;">Orders</button>
     <button class="cart-btn" onclick="toggleCart()">Bag <span class="cart-count" id="cartCount">0</span></button>
   </nav>
 </header>
@@ -171,6 +172,13 @@
     <button class="checkout-btn" onclick="checkout()">Checkout</button>
   </div>
 </div>
+<div class="cart-drawer" id="ordersDrawer" style="right:-420px;">
+  <div class="cart-head">
+    <h3>Your Orders</h3>
+    <button class="close-btn" onclick="toggleOrders()">&times;</button>
+  </div>
+  <div class="cart-items" id="ordersItems"></div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -186,6 +194,7 @@ const products = [
 ];
 
 let cart = JSON.parse(localStorage.getItem('ll_cart') || '[]');
+let orders = JSON.parse(localStorage.getItem('ll_orders') || '[]');
 let activeCat = 'All';
 
 function renderFilters(){
@@ -263,8 +272,50 @@ function toggleCart(){
 }
 function checkout(){
   if(cart.length===0){ showToast('Your bag is empty'); return; }
-  showToast('Order placed! (demo checkout)');
+  const orderNumber = 'LL-' + Math.floor(100000 + Math.random()*900000);
+  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const order = {
+    id: orderNumber,
+    date: new Date().toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}),
+    items: cart.map(i=>({name:i.name, qty:i.qty, price:i.price, img:i.img})),
+    total: total
+  };
+  orders.unshift(order);
+  localStorage.setItem('ll_orders', JSON.stringify(orders));
+  showToast(`Order ${orderNumber} placed successfully!`);
   cart = []; saveCart(); renderCart(); toggleCart();
+}
+
+function renderOrders(){
+  const el = document.getElementById('ordersItems');
+  if(orders.length===0){
+    el.innerHTML = `<div class="empty-cart">No orders yet. Start shopping!</div>`;
+    return;
+  }
+  el.innerHTML = orders.map(o=>`
+    <div style="border-bottom:1px solid var(--line);padding:16px 0;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <strong style="font-size:.85rem;">${o.id}</strong>
+        <span style="color:var(--muted);font-size:.78rem;">${o.date}</span>
+      </div>
+      ${o.items.map(i=>`
+        <div class="cart-item" style="border-bottom:none;padding:8px 0;">
+          <img src="${i.img}" alt="${i.name}">
+          <div class="cart-item-info">
+            <h4>${i.name}</h4>
+            <div style="font-size:.8rem;color:var(--muted);">Qty: ${i.qty} × $${i.price}</div>
+          </div>
+        </div>
+      `).join('')}
+      <div style="text-align:right;font-weight:600;margin-top:6px;">Total: $${o.total.toFixed(2)}</div>
+    </div>
+  `).join('');
+}
+
+function toggleOrders(){
+  renderOrders();
+  document.getElementById('ordersDrawer').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
 }
 function showToast(msg){
   const t = document.getElementById('toast');
